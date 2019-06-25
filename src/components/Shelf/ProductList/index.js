@@ -2,9 +2,9 @@ import React from 'react';
 
 import Product from './Product';
 
-const ProductList = ({ products }) => {
-  return products.map(p => {
-    return <Product product={p} key={p.id} />;
+const ProductList = (props) => {
+  return props.products.map(p => {
+    return <Product product={p} key={p.id} hoverId={props.hoverId} handleMouseHover={(e) => props.handleMouseHover(e)} />;
   });
 };
 

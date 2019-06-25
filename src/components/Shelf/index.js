@@ -15,11 +15,12 @@ class Shelf extends Component {
     fetchProducts: PropTypes.func.isRequired,
     products: PropTypes.array.isRequired,
     filters: PropTypes.array,
-    sort: PropTypes.string
+    sort: PropTypes.string,
   };
 
   state = {
-    isLoading: false
+    isLoading: false,
+    hoverId: -1
   };
 
   componentDidMount() {
@@ -48,16 +49,21 @@ class Shelf extends Component {
     });
   };
 
+  handleHover(e) {
+    this.setState({ hoverId: e });
+  }
+
   render() {
     const { products } = this.props;
     const { isLoading } = this.state;
+    const { hoverId } = this.state;
 
     return (
       <React.Fragment>
         {isLoading && <Spinner />}
         <div className="shelf-container">
           <ShelfHeader productsLength={products.length} />
-          <ProductList products={products} />
+          <ProductList products={products} hoverId={hoverId} handleMouseHover={(e) => this.handleHover(e)} />
         </div>
       </React.Fragment>
     );

@@ -6,7 +6,11 @@ import Thumb from '../../../Thumb';
 import { formatPrice } from '../../../../services/util';
 import { addProduct } from '../../../../services/cart/actions';
 
-const Product = ({ product, addProduct }) => {
+const Product = (props) => {
+  const { product } = props;
+  const { hoverId } = props;
+  const { handleMouseHover } = props;
+
   product.quantity = 1;
 
   let formattedPrice = formatPrice(product.price, product.currencyId);
@@ -36,11 +40,16 @@ const Product = ({ product, addProduct }) => {
       {product.isFreeShipping && (
         <div className="shelf-stopper">Envío gratis</div>
       )}
-      <Thumb
-        classes="shelf-item__thumb"
-        src={require(`../../../../static/products/${product.sku}_1.jpg`)}
-        alt={product.title}
-      />
+      <div
+        onMouseEnter={() => handleMouseHover(product.id)}
+        onMouseLeave={() => handleMouseHover(-1)}>
+        <Thumb
+
+          classes="shelf-item__thumb"
+          src={(hoverId === product.id && require(`../../../../static/products/${product.sku}_1.jpg`)) || require(`../../../../static/products/${product.sku}_2.jpg`)}
+          alt={product.title}
+        />
+      </div>
       <p className="shelf-item__title">{product.title}</p>
       <div className="shelf-item__price">
         <div className="val">
